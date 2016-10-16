@@ -895,7 +895,7 @@ iscsi_protocol = iscsi
 iscsi_helper = tgtadm
 EOF
 
-su -s /bin/sh -c "cinder-manage db_sync" cinder
+su -s /bin/sh -c "cinder-manage db sync" cinder
 service nova-api restart
 service cinder-scheduler restart
 service cinder-api restart
