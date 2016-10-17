@@ -858,6 +858,7 @@ apt-get install cinder-api cinder-scheduler python-cinderclient \
 # ENSURE you have atleast 500 GB of free space while installing cinder
 
 dd if=/dev/zero of=/var/lib/cinder/cinder-volumes bs=1G count=250 || fail
+sleep 15m
 mkfs.ext3 -F /var/lib/cinder/cinder-volumes || fail
 losetup /dev/loop2 /var/lib/cinder/cinder-volumes || fail
 pvcreate /dev/loop2 || fail
