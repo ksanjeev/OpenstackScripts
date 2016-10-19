@@ -709,9 +709,21 @@ sed -i.default-role.bkup -e 's/OPENSTACK_KEYSTONE_DEFAULT_ROLE = "_member_"/OPEN
 # uncomment if you would like multi-domain support, otherwise 'default' will be used
 sed -i.multi-domain.bkup -e 's/#OPENSTACK_KEYSTONE_MULTIDOMAIN_SUPPORT = False/OPENSTACK_KEYSTONE_MULTIDOMAIN_SUPPORT = True/' /etc/openstack-dashboard/local_settings.py
 
+sed -i.default-domain.bkup -e 's/#OPENSTACK_KEYSTONE_DEFAULT_DOMAIN = 'Default'/OPENSTACK_KEYSTONE_DEFAULT_DOMAIN = 'Default'/' /etc/openstack-dashboard/local_settings.py
+
+sed -i.default-host.bkup -e 's/OPENSTACK_HOST = "127.0.0.1"/OPENSTACK_HOST = "$IP"/' /etc/openstack-dashboard/local_settings.py
+
+sed -i.default-url.bkup -e 's/OPENSTACK_KEYSTONE_URL = "http://%s:5000/v2.0" % OPENSTACK_HOST/OPENSTACK_KEYSTONE_URL = "http://%s:5000/v3" % OPENSTACK_HOST/' /etc/openstack-dashboard/local_settings.py
+
+sed -i.allowed-host.bkup -e 's/ALLOWED_HOSTS = '*'/ALLOWED_HOSTS = ['*', ]/' /etc/openstack-dashboard/local_settings.py
+
+sed -i.cache.bkup -e 's/'LOCATION': '127.0.0.1:11211',/'LOCATION': '$IP:11211',/' /etc/openstack-dashboard/local_settings.py
+
+
 cat <<EOF >> /etc/openstack-dashboard/local_settings.py
 OPENSTACK_API_VERSIONS = {
     "identity": 3,
+    "image": 2,
     "volume": 2,
 }
 EOF
